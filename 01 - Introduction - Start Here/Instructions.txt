@@ -1,0 +1,4 @@
+- cd to the folder and run gulp. This will open up a server and sync the browser
+to any file changes
+
+- If you need to install any packages via npm remember to require the packages on the main.js file
