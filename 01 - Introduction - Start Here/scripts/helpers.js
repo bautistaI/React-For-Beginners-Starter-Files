@@ -20,6 +20,6 @@ let helpers =  {
     
     return `${this.rando(adjectives)}-${this.rando(adjectives)}-${this.rando(nouns)}`;
   }
-}
+};
 
 export default helpers;

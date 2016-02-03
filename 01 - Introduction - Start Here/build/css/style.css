@@ -571,7 +571,7 @@ input[type=submit][disabled] {
 }
 button[disabled]:hover,
 input[type=submit][disabled]:hover {
-  color: #d12028;
+  color: #fff;
   cursor: not-allowed;
 }
 button[disabled]:after,
@@ -596,6 +596,7 @@ button:hover,
 input[type=submit]:hover,
 button:focus,
 input[type=submit]:focus {
+  background: #000;
   color: #fff;
   outline: 0;
 }
