@@ -17,6 +17,7 @@ var createBrowserHistory = require('history/lib/createBrowserHistory');
 
 
 // =========== HELPERS ================
+// format price and other helper functions
 var h = require('./helpers.js');
 
 
@@ -63,14 +64,25 @@ var App = React.createClass({
 			fishes : require('./sample-fishes')
 		});
 	},
+	renderFish : function(key){
+		// Whenever you render an element in React
+		// React needs a unique key to be able to track a specific element and updated it, leaving the rest untouched
+		return <Fish key={key} index={key} details={this.state.fishes[key]} />
+	},
 	render : function(){
 		return (
 			<div className="catch-of-the-day">
 				<div className="menu">
 					{/* component */}
 					<Header tagline="Fresh Seafood Market" />
+					{/* Displays the list of sample fishes */}
+					<ul className="list-of-fishes">
+						{Object.keys(this.state.fishes).map(this.renderFish)}
+					</ul>
 				</div>
+				{/* order component */}
 				<Order />
+
 				{/* The addFish method is being passed to inventory so it can be accesses by the AddFishForm component as well as the load samples data from  (sample-fishes.js) */}
 				<Inventory addFish={this.addFish} loadSamples={this.loadSamples}/>
 			</div>
@@ -78,6 +90,26 @@ var App = React.createClass({
 	}
 });
 
+
+/*======================
+	  FISH COMPONENT
+========================*/
+var Fish = React.createClass({
+	render: function(){
+		var details = this.props.details;
+		return(
+			<li className="menu-fish">
+				<img src={details.image} alt="" />
+				<h3 className="fish-name">
+					{details.name}
+					<span className="price">{h.formatPrice(details.price)}</span>
+				</h3>
+				<p>{details.desc}</p>
+				<small className="status">{details.status}</small>
+			</li>
+		)
+	}
+});
 
 
 
