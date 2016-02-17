@@ -57,6 +57,12 @@ var App = React.createClass({
 		 so don't pass the whole state like this.state be specific  */
 		this.setState({ fishes : this.state.fishes });
 	},
+	// load sample object containing fish data (sample-fishes.js)
+	loadSamples : function(){
+		this.setState({
+			fishes : require('./sample-fishes')
+		});
+	},
 	render : function(){
 		return (
 			<div className="catch-of-the-day">
@@ -65,8 +71,8 @@ var App = React.createClass({
 					<Header tagline="Fresh Seafood Market" />
 				</div>
 				<Order />
-				{/* The addFish method is being passed to inventory so it can be accesses by the AddFishForm component */}
-				<Inventory addFish={this.addFish} />
+				{/* The addFish method is being passed to inventory so it can be accesses by the AddFishForm component as well as the load samples data from  (sample-fishes.js) */}
+				<Inventory addFish={this.addFish} loadSamples={this.loadSamples}/>
 			</div>
 		)
 	}
@@ -171,8 +177,8 @@ var Inventory = React.createClass({
 					{/* Using what is called props to share this kind of methods using ... ensure that all methods passed to Inventory
 					are also accessible to other components inside of it */}
 					<AddFishForm {...this.props} />
-				{/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
-			
+					{/* Notice the loadSamples method is notbeing accessed from within the inventory but within the App component */}
+					<button onClick={this.props.loadSamples}>Load Sample Fishes</button>
 			</div>	
 		) 
 	}
