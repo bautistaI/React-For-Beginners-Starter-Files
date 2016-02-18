@@ -67,7 +67,12 @@ var App = React.createClass({
 	renderFish : function(key){
 		// Whenever you render an element in React
 		// React needs a unique key to be able to track a specific element and updated it, leaving the rest untouched
-		return <Fish key={key} index={key} details={this.state.fishes[key]} />
+		return <Fish key={key} index={key} details={this.state.fishes[key]} addToOrder={this.addToOrder} />
+	},
+	addToOrder : function(key){
+		// this would add one fish if none, or add 1 if 1 is already in the order (see video 13)
+		this.state.order[key] = this.state.order[key] + 1 || 1;
+		this.setState({order : this.state.order});
 	},
 	render : function(){
 		return (
@@ -97,8 +102,16 @@ var App = React.createClass({
 	  FISH COMPONENT
 ========================*/
 var Fish = React.createClass({
+	onButtonClick : function(){
+		var key = this.props.index;
+		this.props.addToOrder(key);
+	},
 	render: function(){
 		var details = this.props.details;
+		// logic for the add to order button or sold out label
+		var isAvailable = (details.status === 'available' ? true : false);
+		var buttonText = (isAvailable ? 'Add to Order' : 'Sold Out!');
+
 		return(
 			<li className="menu-fish">
 				<img src={details.image} alt="" />
@@ -107,7 +120,8 @@ var Fish = React.createClass({
 					<span className="price">{h.formatPrice(details.price)}</span>
 				</h3>
 				<p>{details.desc}</p>
-				<small className="status">{details.status}</small>
+				{/* the disabled attribute allows the logic to take place */}
+				<button disabled={!isAvailable} onClick={this.onButtonClick}>{buttonText}</button>
 			</li>
 		)
 	}
